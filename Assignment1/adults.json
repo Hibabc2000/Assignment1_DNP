@@ -1,0 +1,26 @@
+[
+  {
+    "JobTitle": null,
+    "Id": 0,
+    "FirstName": "asdf",
+    "LastName": "asfd",
+    "HairColor": "grey",
+    "EyeColor": "red",
+    "Age": 12,
+    "Weight": 34,
+    "Height": 6,
+    "Sex": ""
+  },
+  {
+    "JobTitle": null,
+    "Id": 0,
+    "FirstName": "asdg",
+    "LastName": "asdf",
+    "HairColor": "hazel",
+    "EyeColor": "red",
+    "Age": 100,
+    "Weight": 45,
+    "Height": 130,
+    "Sex": "male"
+  }
+]

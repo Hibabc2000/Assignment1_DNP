@@ -1,0 +1,91 @@
+﻿@page "/AddAdult"
+
+<h1>Add Adult</h1>
+
+<div>
+    <p>First name: <input type="text" id="firstName" name="firstName" @bind-value="firstName" @bind-value:event="oninput"></p>
+    <p>Last name:  <input type="text" id="lastName" name="lastName" @bind-value="lastName" @bind-value:event="oninput"></p>
+    <p @onload="GetNextID" @onmousemove="GetNextID">ID: @nextID</p>
+    <p>
+        <label for="hairColor">Select a hair color: </label>
+        <select name="hairColor" id="hairColor" @bind-value="eyeColor" @bind-value:event="oninput">
+            <option value="blond">Blond</option>
+            <option value="red">Red</option>
+            <option value="brown">Brown</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            <option value="grey">Grey</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="leverpostej">Leverpostej</option>
+        </select>
+    </p>
+    <p>
+        <label for="eyeColor">Select a hair color: </label>
+        <select name="eyeColor" id="eyeColor" @bind-value="hairColor" @bind-value:event="oninput">
+            <option value="brown">Brown</option>
+            <option value="amber">Amber</option>
+            <option value="hazel">Hazel</option>
+            <option value="grey">Grey</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+        </select>
+    </p>
+    <p>Age: <input type="number" id="age" name="age" @bind-value="age" @bind-value:event="oninput"></p>
+    <p>Weight:  <input type="number" id="weight" name="weight" @bind-value="weight" @bind-value:event="oninput"></p>
+    <p>Height: <input type="number" id="height" name="height" @bind-value="height" @bind-value:event="oninput"></p>
+    <p>Sex:  <input type="text" id="sex" name="sex" @bind-value="sex" @bind-value:event="oninput"></p>
+    <p>Job title:  <input type="text" id="jobTitle" name="jobTitle" @bind-value="jobTitle" @bind-value:event="oninput"></p>
+    <p></p>
+    <button class="btn btn-primary" @onclick="SaveAdult">Save Adult</button>
+</div>
+
+@code {
+
+    private int nextID;
+    FileData.FileContext file = new FileData.FileContext();
+
+    private void GetNextID()
+    {
+        IList<Models.Adult> adults;
+        adults = file.Adults;
+
+        foreach (Models.Adult a in adults)
+        {
+            if (a.Id > nextID)
+            {
+                nextID = a.Id + 1;
+            }
+        }
+    }
+
+    private string firstName;
+    private string lastName;
+    private string hairColor;
+    private string eyeColor;
+    private int age;
+    private float weight;
+    private int height;
+    private string sex;
+    private string jobTitle;
+
+    private void SaveAdult()
+    {
+        
+        GetNextID();
+        Models.Adult toSave = new Models.Adult();
+        toSave.Id = nextID;
+        toSave.FirstName = firstName;
+        toSave.LastName = lastName;
+        toSave.HairColor = hairColor;
+        toSave.EyeColor = eyeColor;
+        toSave.Age = age;
+        toSave.Weight = weight;
+        toSave.Height = height;
+        toSave.Sex = sex;
+        toSave.JobTitle = jobTitle;
+
+        file.Adults.Add(toSave);
+        file.SaveChanges();
+    }
+}
