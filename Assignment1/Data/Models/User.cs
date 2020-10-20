@@ -8,9 +8,9 @@ namespace Assignment1.Data.Models
 {
     public class User
     {
-        private string username;
-        private string password;
-        private ArrayList authority = new ArrayList();
+        public string username { get; set; }
+        public string password { get; set; }
+        public ArrayList authority { get; set; }
 
         public User(string username, string password, ArrayList authority)
         {
@@ -19,13 +19,19 @@ namespace Assignment1.Data.Models
             this.authority = authority;
         }
 
-        public bool getAuthority(string auth)
+        public User()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetAuthority(string auth)
         {
             if (authority.Contains(auth))
             {
                 return true;
             }
-            else return false;
+            else 
+                return false;
         }
     }
 }

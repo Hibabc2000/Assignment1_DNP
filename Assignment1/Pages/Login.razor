@@ -1,10 +1,10 @@
-﻿@page "/"
+@page "/Login"
 @using Assignment1.LoginFunc
 
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 
-<p>Hello there, please log in</p>
+<p>Hello there, login</p>
 
 <div class="form-group">
     <label>User name:</label>
@@ -28,7 +28,7 @@
         try {
             ((CustomAuthenticationStateProvider)AuthenticationStateProvider).ValidateLogin(username, password);
             Console.WriteLine("Logged in succesfully");
-            NavigationManager.NavigateTo("/AddAdult");
+            NavigationManager.NavigateTo("/");
         } catch (Exception e) {
             errorMessage = e.Message;
         }

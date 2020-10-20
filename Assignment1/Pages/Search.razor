@@ -1,5 +1,6 @@
 ﻿@page "/Search"
-
+@attribute [Authorize(Policy = "Search")]
+<AuthorizeView>
 <h1 onload="OnLoad">Search</h1>
 
 <div>
@@ -79,7 +80,7 @@
     <p></p>
     <p><button class="btn btn-primary" @onclick="SearchComplex">Complex Search</button></p>
 </div>
-
+</AuthorizeView>
 @code {
     private FileData.FileContext file = new FileData.FileContext();
 
