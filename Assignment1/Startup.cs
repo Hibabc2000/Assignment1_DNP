@@ -10,6 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Assignment1.Data;
+using Microsoft.AspNetCore.Components.Authorization;
+using Assignment1.LoginFunc;
+using Microsoft.JSInterop;
+using Assignment1.Pages;
+using Assignment1.Data.Models;
 
 namespace Assignment1
 {
@@ -29,6 +34,11 @@ namespace Assignment1
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            services.AddAuthorization(options =>
+                options.AddPolicy("AddAdult", policy => policy.Requirements.Add(new UserRequirement("AddAdult"))));
+            services.AddAuthorization(options =>
+                options.AddPolicy("Search", policy => policy.Requirements.Add(new UserRequirement("Search"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

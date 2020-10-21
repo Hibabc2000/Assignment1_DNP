@@ -5,6 +5,8 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Assignment1.Data.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
@@ -12,7 +14,7 @@ using Microsoft.JSInterop;
 
 namespace Assignment1.LoginFunc
 {
-    public class CustomAuthenticationStateProvider : ServerAuthenticationStateProvider { 
+    public class CustomAuthenticationStateProvider : AuthenticationStateProvider { 
     
         private List<User> users;
         
@@ -50,13 +52,21 @@ namespace Assignment1.LoginFunc
                 password = "poiuy",
                 authority = new ArrayList() {"AddAdult", "Search"}
             });
+
+            foreach (User item in users)
+            {
+                if (item.authority.Contains("AddAdult"))
+                {
+                    item.Requirements.Add(new UserRequirement("AddAdult"));
+                }
+            }
         }
         
         public override async Task<AuthenticationState> GetAuthenticationStateAsync() {
             Console.WriteLine("Retrieving user info");
 
             var identity = new ClaimsIdentity();
-            
+
             var serialisedData = await _jSRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
             if (serialisedData != null) {
                 User user = JsonSerializer.Deserialize<User>(serialisedData, options);

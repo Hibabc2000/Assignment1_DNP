@@ -4,6 +4,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 
+
 <p>Hello there, please log in</p>
 
 <div class="form-group">
@@ -22,8 +23,13 @@
     private string username;
     private string password;
     private string errorMessage;
+    [CascadingParameter]
+    public Task<AuthenticationState> authenticationStateTask { get; set; }
 
     public async Task PerformLogin() {
+        authenticationStateTask = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var authState = await authenticationStateTask;
+        var user = authState.User;
         errorMessage = "";
         try {
             ((CustomAuthenticationStateProvider)AuthenticationStateProvider).ValidateLogin(username, password);
