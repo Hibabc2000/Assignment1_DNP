@@ -6,12 +6,13 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Assignment1.Data.Models;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.JSInterop;
 
 namespace Assignment1.LoginFunc
 {
-    public class CustomAuthenticationStateProvider : AuthenticationStateProvider { 
+    public class CustomAuthenticationStateProvider : ServerAuthenticationStateProvider { 
     
         private List<User> users;
         
